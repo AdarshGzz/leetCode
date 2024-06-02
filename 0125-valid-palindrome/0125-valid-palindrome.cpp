@@ -17,20 +17,21 @@ public:
     //     return checkPalindrome(i,j,s);
     // }
     bool isPalindrome(string s) {
-       string cleaned;
-       for (char c : s) {
-        if (isalnum(c)) {
-            cleaned += tolower(c);
+       int i=0;
+       int j = s.size() - 1;
+       while(i<j){
+        while(i<j && !isalnum(s[j])){
+            j--;
         }
+        while(i<j && !isalnum(s[i])){
+            i++;
+        }
+        if(tolower(s[i]) != tolower(s[j])){
+            return false;
+        }
+        i++;
+        j--;
        }
-        int i = 0, j = cleaned.size() - 1;
-        while (i < j) {
-            if (cleaned[i] != cleaned[j]) {
-                return false;
-            }
-            ++i;
-            --j;
-        }
-        return true;
+       return true;
     }
 };
