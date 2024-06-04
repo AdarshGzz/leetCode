@@ -20,22 +20,29 @@ class Solution {
 public:
 
     Node* connect(Node* root) {
-        Node* node = root;
-
-        while(node){
-            Node dummy(0);
-            for(Node* needle = &dummy; node; node = node->next){
-                if(node->left){
-                    needle->next = node->left;
-                    needle = needle->next;
+       if (!root) return nullptr;
+        
+        std::queue<Node*> q;
+        q.push(root);
+        
+        while (!q.empty()) {
+            int size = q.size();
+            Node* prev = nullptr;
+            
+            for (int i = 0; i < size; ++i) {
+                Node* node = q.front();
+                q.pop();
+                
+                if (prev) {
+                    prev->next = node;
                 }
-                if(node->right){
-                    needle->next = node->right;
-                    needle = needle->next;
-                }
+                prev = node;
+                
+                if (node->left) q.push(node->left);
+                if (node->right) q.push(node->right);
             }
-            node = dummy.next;
         }
+        
         return root;
     }
 };
